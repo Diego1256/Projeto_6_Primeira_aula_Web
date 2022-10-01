@@ -17,11 +17,11 @@
 							<hr/>
 						</div>
 						
-						<form>
+						<form id="form_password" action="password-user" method="post">
 							
 							<div class="mb-3">
 								<label>Informe seu email de acesso:</label>
-								<input type="text" placeholder="Digite aqui" class="form-control"/>
+								<input type="text" id="email" name="email" placeholder="Digite aqui" class="form-control"/>
 							</div>
 														
 							<div class="mb-3">
@@ -40,6 +40,14 @@
 						
 						</form>
 						
+						<div class="text-success text-center">
+							<strong>${mensagem_sucesso}</strong>
+						</div>
+						
+						<div class="text-danger text-center">
+							<strong>${mensagem_erro}</strong>
+						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -47,6 +55,26 @@
 		
 		<!-- link para os arquivos de extensão JS -->
 		<script src="resources/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+		<script src="resources/js/jquery-3.6.1.min.js" type="text/javascript"></script>
+		<script src="resources/js/jquery.validate.min.js" type="text/javascript"></script>
+		<script src="resources/js/additional-methods.min.js" type="text/javascript"></script>
+		<script src="resources/js/messages_pt_BR.min.js" type="text/javascript"></script>
+		
+		<script>
+		
+			//função para inicialização do JQuery
+			$(document).ready(function() {
+				
+				//configurando a validação do formulário
+				$("#form_password").validate({
+					rules: {
+						"email" : { required: true, email : true }
+					}
+				});
+				
+			});
+		
+		</script>
 		
 	</body>
 </html>

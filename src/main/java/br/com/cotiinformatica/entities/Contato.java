@@ -1,7 +1,5 @@
 package br.com.cotiinformatica.entities;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,13 +11,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-
-public class Usuario {
-	private Integer IdUsuario;
+public class Contato {
+	private Integer IdContato;
 	private String nome;
-	private String senha;
 	private String email;
-	private List<Contato> contatos;
-	
+	private String telefone;
+	private Usuario usuario;
 
 }

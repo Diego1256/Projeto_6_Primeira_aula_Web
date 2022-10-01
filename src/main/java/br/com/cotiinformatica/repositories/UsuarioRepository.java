@@ -21,6 +21,19 @@ public class UsuarioRepository {
 
 		connection.close();
 
+	}	
+	
+	public void update(Integer idUsuario, String novaSenha) throws Exception{
+		
+		Connection connection = ConnectionFactory.createConnection();
+		
+		PreparedStatement statement = connection.prepareStatement(" update usuario set senha = md5(?) where idusuario=?");
+		statement.setString(1, novaSenha);
+		statement.setInt(2, idUsuario);
+		statement.execute();
+		
+		connection.close();
+		
 	}
 
 	public Usuario findByEmail(String email) throws Exception {
@@ -47,7 +60,7 @@ public class UsuarioRepository {
 
 		Connection connection = ConnectionFactory.createConnection();
 		PreparedStatement statement = connection
-				.prepareStatement("select * from usuario where email=? and senha=md5(?))");
+				.prepareStatement("select * from usuario where email=? and senha=md5(?)");
 		statement.setString(1, email);
 		statement.setString(2, senha);
 		ResultSet resultSet = statement.executeQuery();
