@@ -6,7 +6,7 @@
 
 <meta charset="UTF-8">
 
-<title>Alterar Senha</title>
+<title>Editar Contato</title>
 
 <!-- link para os arquivos de extensão .CSS -->
 <link rel="stylesheet" href="../resources/css/bootstrap.min.css"
@@ -26,26 +26,36 @@
 
 	<div class="container mt-4">
 
-		<h3>Alterar Senha</h3>
-		<p>Preencha os campos para modificar sua senha de acesso.</p>
+		<h3>Edição de Contato</h3>
+		<p>Utilize os campos para alterar os dados do contato.</p>
 		<hr />
 		
-		<form id="form_senha" action="atualizar-senha" method="post">
+		<form id="form_contato" action="executar-edicao-contato" method="post">
+		
+			<!-- campo oculto -->
+			<input type="hidden" name="idcontato" value="${contato.idContato}"/>
 		
 			<div class="row mb-3">
-				<div class="col-md-4">
-					<label>Informe a nova senha:</label>
-					<input type="password" name="novasenha" id="novasenha" class="form-control"/>
+				<div class="col-md-6">
+					<label>Nome do Contato:</label>
+					<input type="text" name="nome" class="form-control" value="${contato.nome}"/>
 				</div>
-				<div class="col-md-4">
-					<label>Confirme a nova senha:</label>
-					<input type="password" name="novasenhaconfirmacao" class="form-control"/>
+				<div class="col-md-3">
+					<label>Endereço de email:</label>
+					<input type="text" name="email" class="form-control" value="${contato.email}"/>
+				</div>
+				<div class="col-md-3">
+					<label>Telefone:</label>
+					<input type="text" name="telefone" id="telefone" class="form-control" value="${contato.telefone}"/>
 				</div>
 			</div>
 			
 			<div class="row mb-3">
 				<div class="col-md-12">
-					<input type="submit" value="Salvar nova senha" class="btn btn-primary"/>
+					<input type="submit" value="Salvar alterações" class="btn btn-primary"/>
+					<a href="/projetoweb01/admin/consultar-contato" class="btn btn-secondary">
+						Voltar para a consulta
+					</a>
 				</div>
 			</div>
 		
@@ -69,6 +79,7 @@
 	<script src="../resources/js/jquery.validate.min.js" type="text/javascript"></script>
 	<script src="../resources/js/additional-methods.min.js" type="text/javascript"></script>
 	<script src="../resources/js/messages_pt_BR.min.js" type="text/javascript"></script>
+	<script src="../resources/js/jquery.maskedinput.min.js" type="text/javascript"></script>
 		
 	<script>
 		
@@ -76,12 +87,17 @@
 		$(document).ready(function() {
 				
 			//configurando a validação do formulário
-			$("#form_senha").validate({
+			$("#form_contato").validate({
 				rules: {
-					"novasenha" : { required: true, minlength: 8, maxlength: 20 },
-					"novasenhaconfirmacao" : { required: true, equalTo: "#novasenha" },
+					"nome" : { required: true, minlength: 8, maxlength: 150 },
+					"email" : { required: true, email : true },
+					"telefone" : { required: true }
 				}
 			});
+			
+			//configurando as máscaras dos campos
+			$("#telefone").mask("(99) 99999-9999");
+			
 		});
 		
 	</script>

@@ -17,7 +17,6 @@
 						<li><a class="dropdown-item" href="/projetoweb01/admin/cadastrar-contato">Cadastrar Contatos</a></li>
 						<li><a class="dropdown-item" href="/projetoweb01/admin/consultar-contato">Consultar Contatos</a></li>
 						<li><hr class="dropdown-divider"></li>
-						<li><a class="dropdown-item" href="/projetoweb01/admin/relatorio-contato">Relatório de Contatos</a></li>
 					</ul>
 				</li>
 				<li class="nav-item dropdown">

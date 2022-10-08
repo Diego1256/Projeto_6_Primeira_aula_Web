@@ -20,27 +20,61 @@ public class ConsultarContatoController {
 
 		// WEB-INF/views/admin/consultar-contato
 		ModelAndView modelAndView = new ModelAndView("admin/consultar-contato");
-		
+
 		try {
-			
-			//ler o usuário da sessão (usuário autenticado)
+
+			// ler o usuário da sessão (usuário autenticado)
 			Usuario usuario = (Usuario) request.getSession().getAttribute("usuario_auth");
-			
-			//consultar todos os contatos deste usuário
+
+			// consultar todos os contatos deste usuário
 			ContatoRepository contatoRepository = new ContatoRepository();
 			List<Contato> lista = contatoRepository.findByUsuario(usuario.getIdUsuario());
+
+			// enviando a lista para a página
+			modelAndView.addObject("lista_contatos", lista);
+		} catch (Exception e) {
+			modelAndView.addObject("mensagem_erro", "Falha ao consultar contatos: " + e.getMessage());
+		}
+
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/admin/excluir-contato")
+	public ModelAndView excluirContato(HttpServletRequest request) {
+
+		// WEB-INF/views/admin/consultar-contato
+		ModelAndView modelAndView = new ModelAndView("admin/consultar-contato");
+
+		try {
 			
-			//enviando a lista para a página
+			//capturar o usuário autenticado no sistema (sessão)
+			Usuario usuario = (Usuario) request.getSession().getAttribute("usuario_auth");
+			
+			//capturar o id do contato enviado pela URL
+			Integer idContato = Integer.parseInt(request.getParameter("idContato"));
+			
+			//consultar o contato no banco de dados
+			ContatoRepository contatoRepository = new ContatoRepository();
+			Contato contato = contatoRepository.findById(idContato, usuario.getIdUsuario());
+			
+			//verificar se o contato foi encontrado
+			if(contato != null) {
+				
+				//excluindo o contato
+				contatoRepository.delete(contato);
+				modelAndView.addObject("mensagem_sucesso", "Contato " + contato.getNome() + " excluído com sucesso.");
+			}
+			
+			List<Contato> lista = contatoRepository.findByUsuario(usuario.getIdUsuario());
+
+			// enviando a lista para a página
 			modelAndView.addObject("lista_contatos", lista);
 		}
 		catch(Exception e) {
-			modelAndView.addObject("mensagem_erro", "Falha ao consultar contatos: " + e.getMessage());
+			modelAndView.addObject("mensagem_erro", "Falha ao excluir contatos: " + e.getMessage());
 		}
 		
 		return modelAndView;
 	}
 
 }
-
-
-
